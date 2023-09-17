@@ -1,4 +1,4 @@
-# 0.0.1+1
+# 0.0.1-patch.1
 
 - Switch from Rome to Biome, following the package having been renamed.
 
