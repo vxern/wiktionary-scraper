@@ -1,12 +1,12 @@
 import * as cheerio from "cheerio";
-import { Entry, Lemma, PartOfSpeech, SectionType, Sections } from "../types.js";
-import selectors from "../constants/selectors.js";
-import { ScraperOptions } from "../options.js";
+import partsOfSpeech from "../constants/parts-of-speech.js";
 import patterns from "../constants/patterns.js";
 import sections from "../constants/sections.js";
-import parsers from "./parsers.js";
-import partsOfSpeech from "../constants/parts-of-speech.js";
+import selectors from "../constants/selectors.js";
+import { ScraperOptions } from "../options.js";
+import { Entry, Lemma, PartOfSpeech, SectionType, Sections } from "../types.js";
 import { addMissingProperties } from "../utils.js";
+import parsers from "./parsers.js";
 
 export type Parser<S extends Partial<Sections>, K extends keyof S> = (
 	$: cheerio.CheerioAPI,

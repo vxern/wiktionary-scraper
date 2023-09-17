@@ -1,9 +1,9 @@
 import * as cheerio from "cheerio";
-import { ScraperOptions } from "./options.js";
 import links from "./constants/links.js";
 import selectors from "./constants/selectors.js";
-import { Entry } from "./types.js";
+import { ScraperOptions } from "./options.js";
 import { parse } from "./parsers/parser.js";
+import { Entry } from "./types.js";
 
 const defaultScraperOptions: ScraperOptions = {
 	lemmaLanguage: "English",

@@ -1,9 +1,9 @@
-import { Definition, Example, LabelledTextField, Quotation } from "../../types.js";
 import * as cheerio from "cheerio";
-import { EntrySectionSkeleton } from "../parser.js";
-import selectors from "../../constants/selectors.js";
-import { clean } from "../../utils.js";
 import patterns from "../../constants/patterns.js";
+import selectors from "../../constants/selectors.js";
+import { Definition, Example, LabelledTextField, Quotation } from "../../types.js";
+import { clean } from "../../utils.js";
+import { EntrySectionSkeleton } from "../parser.js";
 
 export default function parse($: cheerio.CheerioAPI, skeleton: EntrySectionSkeleton): Definition[] | undefined {
 	const $root = $(skeleton.id);

@@ -1,5 +1,5 @@
-import { AlternativeForm } from "../../types.js";
 import * as cheerio from "cheerio";
+import { AlternativeForm } from "../../types.js";
 import { EntrySectionSkeleton } from "../parser.js";
 
 // TODO(vxern): Implement.

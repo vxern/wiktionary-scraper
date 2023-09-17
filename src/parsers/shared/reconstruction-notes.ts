@@ -1,5 +1,5 @@
-import { ReconstructionNotes } from "../../types.js";
 import * as cheerio from "cheerio";
+import { ReconstructionNotes } from "../../types.js";
 import { EntrySectionSkeleton } from "../parser.js";
 
 // TODO(vxern): Implement.

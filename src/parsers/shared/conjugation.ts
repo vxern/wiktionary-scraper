@@ -1,5 +1,5 @@
-import { Inflection } from "../../types.js";
 import * as cheerio from "cheerio";
+import { Inflection } from "../../types.js";
 import { EntrySectionSkeleton } from "../parser.js";
 
 // TODO(vxern): Implement.
