@@ -4,7 +4,7 @@ import patterns from "../constants/patterns.js";
 import sections from "../constants/sections.js";
 import selectors from "../constants/selectors.js";
 import { ScraperOptions } from "../options.js";
-import { Entry, Lemma, PartOfSpeech, SectionType, Sections } from "../types.js";
+import { Entry, Lemma, SectionType, Sections } from "../types.js";
 import { addMissingProperties } from "../utils.js";
 import parsers from "./parsers.js";
 
@@ -97,21 +97,21 @@ function parseEntrySkeleton(
 		return sectionType === "etymology" && sectionIndex !== undefined;
 	});
 	if (isMultipleEntries) {
-		return parseMultipleEntries(options, $, skeleton, lemma);
+		return parseMultipleEtymologies(options, $, skeleton, lemma);
 	}
 
-	const entry = parseSingleEntry(options, $, skeleton, lemma);
-	if (entry === undefined) {
+	const entries = parseSingleEtymology(options, $, skeleton, lemma);
+	if (entries === undefined) {
 		return [];
 	}
 
-	return [entry];
+	return entries;
 }
 
 type SectionTypeTuple = [sectionType: SectionType, sectionIndex: number | undefined, skeleton: EntrySectionSkeleton];
 type SectionNameTuple = [sectionName: string, skeleton: EntrySectionSkeleton];
 
-function parseMultipleEntries(
+function parseMultipleEtymologies(
 	options: ScraperOptions,
 	$: cheerio.CheerioAPI,
 	skeleton: EntrySectionSkeleton,
@@ -140,31 +140,35 @@ function parseMultipleEntries(
 		}
 	}
 
-	const topLevelEntry = parseSingleEntry(options, $, skeletonWithoutEtymologySections, lemma);
+	const topLevelEntries = parseSingleEtymology(options, $, skeletonWithoutEtymologySections, lemma);
 
 	const entries: Entry[] = [];
 	for (const etymologySection of etymologySections) {
 		const etymology = parsers.etymology($, etymologySection);
 
-		const entry = parseSingleEntry(options, $, etymologySection, lemma);
-		if (entry === undefined) {
+		const entriesNew = parseSingleEtymology(options, $, etymologySection, lemma);
+		if (entriesNew === undefined) {
 			continue;
 		}
 
 		if (etymology !== undefined) {
-			entry.etymology = etymology;
+			for (const entry of entriesNew) {
+				entry.etymology = etymology;
+			}
 		}
 
-		entries.push(entry);
+		entries.push(...entriesNew);
 	}
 
-	if (topLevelEntry !== undefined) {
+	if (topLevelEntries !== undefined) {
 		if (entries.length === 0) {
-			return [topLevelEntry];
+			return topLevelEntries;
 		}
 
 		for (const entry of entries) {
-			addMissingProperties(entry, topLevelEntry);
+			for (const topLevelEntry of topLevelEntries) {
+				addMissingProperties(entry, topLevelEntry);
+			}
 		}
 
 		return entries;
@@ -173,12 +177,12 @@ function parseMultipleEntries(
 	}
 }
 
-function parseSingleEntry(
+function parseSingleEtymology(
 	options: ScraperOptions,
 	$: cheerio.CheerioAPI,
 	skeleton: EntrySectionSkeleton,
 	lemma: Lemma,
-): Entry | undefined {
+): Entry[] | undefined {
 	const sectionsMapped = sections[options.siteLanguage];
 	const partsOfSpeechMapped = partsOfSpeech[options.siteLanguage];
 
@@ -215,10 +219,10 @@ function parseSingleEntry(
 		entrySections[sectionType] = section;
 	}
 
-	let partOfSpeech: PartOfSpeech | undefined;
+	const entries: Entry[] = [];
 	for (const [sectionName, skeleton] of sectionsUnrecognised) {
-		const partOfSpeechMatched = partsOfSpeechMapped[sectionName];
-		if (partOfSpeechMatched === undefined) {
+		const partOfSpeech = partsOfSpeechMapped[sectionName];
+		if (partOfSpeech === undefined) {
 			continue;
 		}
 
@@ -227,15 +231,7 @@ function parseSingleEntry(
 			continue;
 		}
 
-		partOfSpeech = partOfSpeechMatched;
-		entrySections.definitions = definitions;
+		entries.push({ ...entrySections, lemma, partOfSpeech, definitions });
 	}
-
-	const entry: Entry = { lemma, ...entrySections };
-
-	if (partOfSpeech !== undefined) {
-		entry.partOfSpeech = partOfSpeech;
-	}
-
-	return entry;
+	return entries;
 }

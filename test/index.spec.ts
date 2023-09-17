@@ -32,4 +32,25 @@ describe("The parser", () => {
 
 		expect(results).to.not.be.undefined;
 	});
+
+	it("parses result with one etymology section and one part of speech.", async () => {
+		const results = await Wiktionary.get("United Kingdom", { lemmaLanguage: "English" });
+
+		expect(results).to.not.be.undefined;
+		expect(results).to.be.of.length(1);
+	});
+
+	it("parses result with one etymology section and more than one part of speech.", async () => {
+		const results = await Wiktionary.get("Haus", { lemmaLanguage: "German" });
+
+		expect(results).to.not.be.undefined;
+		expect(results).to.be.of.length(2);
+	});
+
+	it("parses result with multiple etymology sections with one or more part of speech each.", async () => {
+		const results = await Wiktionary.get("a");
+
+		expect(results).to.not.be.undefined;
+		expect(results).to.be.at.of.length.at.least(13);
+	});
 });
