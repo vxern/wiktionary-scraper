@@ -120,74 +120,65 @@ export type EntrySections = {
 export type Sections = SharedSections & EntrySections;
 export type SectionType = keyof Sections;
 
-/**
- * @see https://en.wiktionary.org/wiki/Wiktionary:Entry_layout#Part_of_speech
- */
-export type StandardPartsOfSpeech =
-	// Parts of speech
+export type PartOfSpeech =
+	| "abbreviation"
+	| "acronym"
 	| "adjective"
+	| "adposition"
+	| "adposition/ambiposition"
+	| "adposition/circumposition"
+	| "adposition/postposition"
+	| "adposition/preposition"
 	| "adverb"
-	| "ambiposition"
+	| "affix"
+	| "affix/circumfix"
+	| "affix/infix"
+	| "affix/interfix"
+	| "affix/prefix"
+	| "affix/suffix"
 	| "article"
-	| "circumposition"
+	| "character"
+	| "character/han"
+	| "character/hanzi"
+	| "character/kanji"
+	| "character/hanja"
 	| "classifier"
+	| "clitic"
 	| "conjunction"
 	| "contraction"
 	| "counter"
+	| "determinative"
 	| "determiner"
+	| "form/combining"
+	| "gerund"
 	| "ideophone"
+	| "idiom"
+	| "initialism"
 	| "interjection"
-	| "noun"
-	| "numeral"
-	| "participle"
-	| "particle"
-	| "postposition"
-	| "preposition"
-	| "pronoun"
-	| "proper-noun"
-	| "verb"
-	// Morphemes
-	| "circumfix"
-	| "combining-form"
-	| "infix"
-	| "interfix"
-	| "prefix"
-	| "root"
-	| "suffix"
-	// Symbols and characters
-	| "diacritical-mark"
 	| "letter"
 	| "ligature"
+	| "logogram"
+	| "mark/diacritical"
+	| "mark/punctuation"
+	| "noun"
+	| "noun/proper"
 	| "number"
-	| "punctuation-mark"
+	| "numeral"
+	| "numeral/cardinal"
+	| "numeral/ordinal"
+	| "number/cardinal"
+	| "number/ordinal"
+	| "participle"
+	| "particle"
+	| "phrase"
+	| "phrase/prepositional"
+	| "pronoun"
+	| "proverb"
+	| "romanization"
+	| "root"
 	| "syllable"
 	| "symbol"
-	// Phrases
-	| "phrase"
-	| "proverb"
-	| "prepositional-phrase"
-	// Han characters and language-specific varieties
-	| "han-character"
-	| "hanzi"
-	| "kanji"
-	| "hanja"
-	// Other
-	| "romanization"
-	| "logogram"
-	| "determinative";
-export type DisallowedPartOfSpeech =
-	| "abbreviation"
-	| "acronym"
-	| "initialism"
-	| "cardinal-number"
-	| "ordinal-number"
-	| "cardinal-numeral"
-	| "ordinal-numeral"
-	| "clitic"
-	| "gerund"
-	| "idiom";
-
-export type PartOfSpeech = "adposition" | "affix" | "character" | StandardPartsOfSpeech | DisallowedPartOfSpeech;
+	| "verb";
 
 export type Entry = {
 	lemma: Lemma;

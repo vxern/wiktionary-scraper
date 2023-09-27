@@ -1,3 +1,7 @@
+# 0.0.2
+
+- Group parts of speech using a consistent classification system.
+
 # 0.0.1-patch.3
 
 - Fix package having been published without re-compilation via `tsc`.
