@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/mocharc",
   "loader": "ts-node/esm",
-  "spec": "test/**/*.spec.ts",
+  "spec": "test/languages/german/**/*.spec.ts",
   "timeout": 10000
 }

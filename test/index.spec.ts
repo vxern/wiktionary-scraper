@@ -1,56 +1,29 @@
 import { describe, it } from "mocha";
-import * as Wiktionary from "../src/index.js";
 import { expect } from "chai";
+import * as Wiktionary from "../src/index.js";
 
-describe("The parser", () => {
-	it("returns `undefined` for terms that do not exist.", async () => {
-		const results = await Wiktionary.get("this.is.a.string.that.does.not.exist");
+describe("fetchPageContents()", () => {
+	it("should yield a result for a term that exists.", async () => {
+		const result = await Wiktionary.fetchPageContents("Germany");
 
-		expect(results).to.be.undefined;
+		expect(result).to.not.be.undefined;
 	});
 
-	it("returns English results for terms that do exist.", async () => {
-		const results = await Wiktionary.get("o");
+	it("should yield `undefined` for a term that does not exist.", async () => {
+		const result = await Wiktionary.fetchPageContents("Kermany");
 
-		expect(results).to.not.be.undefined;
+		expect(result).to.be.undefined;
 	});
 
-	it("returns results for terms in a language different to English.", async () => {
-		const results = await Wiktionary.get("o", { lemmaLanguage: "Romanian" });
+	it("should yield a result for a term with a redirect when following redirects.", async () => {
+		const result = await Wiktionary.fetchPageContents("germany", Wiktionary.withDefaults({ followRedirect: true }));
 
-		expect(results).to.not.be.undefined;
+		expect(result).to.not.be.undefined;
 	});
 
-	it("returns `undefined` for redirects when following redirects is disabled.", async () => {
-		const results = await Wiktionary.get("germany");
+	it("should yield `undefined` for a term with a redirect when not following redirects.", async () => {
+		const result = await Wiktionary.fetchPageContents("germany");
 
-		expect(results).to.be.undefined;
-	});
-
-	it("returns results for redirects when following redirects is enabled.", async () => {
-		const results = await Wiktionary.get("a", { followRedirect: true });
-
-		expect(results).to.not.be.undefined;
-	});
-
-	it("parses result with one etymology section and one part of speech.", async () => {
-		const results = await Wiktionary.get("United Kingdom", { lemmaLanguage: "English" });
-
-		expect(results).to.not.be.undefined;
-		expect(results).to.be.of.length(1);
-	});
-
-	it("parses result with one etymology section and more than one part of speech.", async () => {
-		const results = await Wiktionary.get("Haus", { lemmaLanguage: "German" });
-
-		expect(results).to.not.be.undefined;
-		expect(results).to.be.of.length(2);
-	});
-
-	it("parses result with multiple etymology sections with one or more part of speech each.", async () => {
-		const results = await Wiktionary.get("a");
-
-		expect(results).to.not.be.undefined;
-		expect(results).to.be.at.of.length.at.least(13);
+		expect(result).to.be.undefined;
 	});
 });

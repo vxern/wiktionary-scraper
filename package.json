@@ -2,7 +2,7 @@
 	"name": "wiktionary-scraper",
 	"description": "A lightweight scraper to fetch information about words in various languages from Wiktionary.",
 	"license": "MIT",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"type": "module",
@@ -37,7 +37,7 @@
 		"url": "https://github.com/vxern/wiktionary-scraper"
 	},
 	"scripts": {
-		"build": "tsc",
+		"format": "biome check src/ --apply-unsafe",
 		"test": "mocha --no-warnings",
 		"publish": "tsc && npm publish"
 	},

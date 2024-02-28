@@ -1,51 +1,86 @@
 import * as cheerio from "cheerio";
-import links from "./constants/links.js";
-import selectors from "./constants/selectors.js";
-import { ScraperOptions } from "./options.js";
-import { parse } from "./parsers/parser.js";
-import { Entry } from "./types.js";
+import constants from "./constants/constants.js";
+import { parse } from "./languages/parsers.js";
+import { ScraperOptions, defaultScraperOptions } from "./options.js";
+import { QueryResult } from "./types.js";
+import { resolveSkeletons } from "./languages/resolvers.js";
 
-const defaultScraperOptions: ScraperOptions = {
-	lemmaLanguage: "English",
-	siteLanguage: "en",
-	userAgent: "wiktionary-scraper (github.com/vxern/wiktionary-scraper)",
-	followRedirect: false,
-} as const;
+export async function get(lemma: string, optionsPartial?: Partial<ScraperOptions>): Promise<QueryResult | undefined> {
+	const options: ScraperOptions = { ...defaultScraperOptions, ...optionsPartial };
 
-export async function get(
+	const result = await fetchPageContents(lemma, options);
+	if (result === undefined) {
+		return undefined;
+	}
+
+	const { contents, isRedirect } = result;
+
+	if (isRedirect) {
+		const $ = cheerio.load(contents);
+		const suggestedLemma = $(constants.selectors.didYouMean).html() ?? undefined;
+		if (suggestedLemma === undefined) {
+			return undefined;
+		}
+
+		const result = await get(suggestedLemma, options);
+		if (result === undefined) {
+			return undefined;
+		}
+
+		return { entries: result.entries, redirected: true };
+	}
+
+	const $ = cheerio.load(contents);
+
+	const skeletons = resolveSkeletons($, options);
+	if (skeletons === undefined) {
+		return undefined;
+	}
+
+	const skeleton = skeletons.find((skeleton) => skeleton.name === options.lemmaLanguage);
+	if (skeleton === undefined) {
+		return undefined;
+	}
+
+	const entries = parse($, skeleton, { value: lemma }, options);
+	if (entries === undefined) {
+		return undefined;
+	}
+
+	return { entries, redirected: false };
+}
+
+export type FetchResult = { contents: string; isRedirect: boolean };
+export async function fetchPageContents(
 	lemma: string,
-	options: Partial<ScraperOptions> = defaultScraperOptions,
-): Promise<Entry[] | undefined> {
-	const optionsFilled: ScraperOptions = { ...defaultScraperOptions, ...options };
-
+	options: ScraperOptions = defaultScraperOptions,
+): Promise<FetchResult | undefined> {
 	let response;
 	try {
-		response = await fetch(links.definition(lemma, optionsFilled), {
-			headers: optionsFilled.userAgent !== undefined ? { "User-Agent": optionsFilled.userAgent } : {},
+		response = await fetch(constants.links.definition(lemma, options), {
+			headers: options.userAgent !== undefined ? { "User-Agent": options.userAgent } : {},
 		});
 	} catch {
 		return undefined;
 	}
 
-	const body = await response.text();
-	const $ = cheerio.load(body);
+	const contents = await response.text().catch(() => undefined);
+	if (contents === undefined) {
+		return undefined;
+	}
 
 	if (!response.ok) {
 		if (response.status === 404 && options.followRedirect) {
-			const suggestedLemma = $(selectors.didYouMean).html() ?? undefined;
-			if (suggestedLemma === undefined) {
-				return undefined;
-			}
-
-			return get(suggestedLemma, optionsFilled);
-		} else {
-			return undefined;
+			return { contents, isRedirect: true };
 		}
+
+		return undefined;
 	}
 
-	return parse(optionsFilled, $, { value: lemma });
+	return { contents, isRedirect: false };
 }
 
-export * from "./parsers/parser.js";
+export * from "./languages/parsers.js";
+export * from "./languages/resolvers.js";
 export * from "./options.js";
 export * from "./types.js";

@@ -1,3 +1,8 @@
+# 0.0.3
+
+- Properly implement tests.
+- Redesign package to support multiple distributions of Wiktionary.
+
 # 0.0.2
 
 - Group parts of speech using a consistent classification system.

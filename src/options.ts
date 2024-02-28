@@ -1,4 +1,11 @@
-export type SiteLanguage = "en";
+export const defaultScraperOptions: ScraperOptions = {
+	lemmaLanguage: "English",
+	siteLanguage: "en",
+	userAgent: "wiktionary-scraper (https://github.com/vxern/wiktionary-scraper)",
+	followRedirect: false,
+} as const;
+
+export type SiteLanguage = "de" | "en";
 
 /** Defines the available options for getting a lemma from the dictionary. */
 export interface ScraperOptions {
@@ -29,4 +36,8 @@ export interface ScraperOptions {
 	 * Whether the scraper should follow redirects to similar terms if the term does not exist.
 	 */
 	followRedirect: boolean;
+}
+
+export function withDefaults(options: Partial<ScraperOptions>): ScraperOptions {
+	return { ...defaultScraperOptions, ...options };
 }

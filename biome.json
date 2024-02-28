@@ -6,6 +6,10 @@
       "suspicious": {
         "noEmptyInterface": "off"
       },
+      "style": {
+        "useNamingConvention": "off",
+        "noNonNullAssertion": "off"
+      },
       "nursery": {
         "useImportRestrictions": "off"
       }

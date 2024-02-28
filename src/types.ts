@@ -11,6 +11,7 @@ export type Quotation = string;
 export type AlternativeForm = LabelledTextField;
 export type AlternativeReconstruction = string;
 export type Relation = LabelledTextField;
+export type Composition = LabelledTextField;
 export type Translation = {
 	language: string;
 	words: string[];
@@ -58,13 +59,11 @@ export interface Relations {
 	descendants: Relation[];
 }
 
-/**
- * @see https://en.wiktionary.org/wiki/Wiktionary:Entry_layout#List_of_headings
- */
 type SharedSections = {
 	usageNotes: UsageNotes;
 	reconstructionNotes: ReconstructionNotes;
 } & Inflections & {
+		composition: Composition[];
 		mutation: Mutation;
 		quotations: Quotation[];
 		alternativeForms: AlternativeForm[];
@@ -86,8 +85,8 @@ type SharedSections = {
 export type Description = string;
 export type GlyphOrigin = string;
 export type Etymology = {
-	paragraphs: string[];
-	listEntries: string[];
+	paragraphs?: string[];
+	listEntries?: string[];
 };
 export interface Transcription extends LabelledTextField {
 	system: string;
@@ -122,65 +121,150 @@ export type SectionType = keyof Sections;
 
 export type PartOfSpeech =
 	| "abbreviation"
-	| "acronym"
+	| "abbreviation/acronym"
+	| "abbreviation/initialism"
 	| "adjective"
+	| "adjective/demonstrative"
+	| "adjective/exclamative"
+	| "adjective/indefinite"
+	| "adjective/interrogative"
+	| "adjective/numeral"
+	| "adjective/possessive"
+	| "adjective/relative"
 	| "adposition"
 	| "adposition/ambiposition"
 	| "adposition/circumposition"
 	| "adposition/postposition"
 	| "adposition/preposition"
 	| "adverb"
+	| "adverb/indefinite"
+	| "adverb/interrogative"
+	| "adverb/conjunction"
+	| "adverb/local"
+	| "adverb/pronominal"
+	| "adverb/temporal"
 	| "affix"
 	| "affix/circumfix"
 	| "affix/infix"
 	| "affix/interfix"
 	| "affix/prefix"
 	| "affix/suffix"
-	| "article"
+	| "affixoid"
+	| "affixoid/prefixoid"
+	| "affixoid/suffixoid"
 	| "character"
-	| "character/han"
-	| "character/hanzi"
-	| "character/kanji"
-	| "character/hanja"
+	| "character/logogram"
+	| "character/logogram/chinese"
+	| "character/logogram/hanzi"
+	| "character/logogram/kanji"
+	| "character/logogram/hanja"
 	| "classifier"
 	| "clitic"
-	| "conjunction"
+	| "clitic/proclitic"
+	| "clitic/enclitic"
+	| "clitic/endoclitic"
+	| "collocation"
+	| "collocation/adjectival"
+	| "collocation/adverbial"
+	| "collocation/catchphrase"
+	| "collocation/greeting"
+	| "collocation/idiom"
+	| "collocation/mnemonic"
+	| "collocation/nominal"
+	| "collocation/proverb"
+	| "collocation/verbal"
+	| "combining-form"
 	| "contraction"
 	| "counter"
 	| "determinative"
 	| "determiner"
-	| "form/combining"
-	| "gerund"
+	| "determiner/article"
+	| "determiner/article/indefinite"
+	| "determiner/article/definite"
+	| "determiner/article/partitive"
+	| "determiner/quantifier"
 	| "ideophone"
-	| "idiom"
-	| "initialism"
-	| "interjection"
+	| "inflection"
+	| "inflection/declined"
+	| "junction"
+	| "junction/conjunction"
+	| "junction/conjunction/coordinate"
+	| "junction/subjunction"
 	| "letter"
 	| "ligature"
-	| "logogram"
-	| "mark/diacritical"
-	| "mark/punctuation"
+	| "lojban/gismu"
+	| "lojban/rafsi"
 	| "noun"
+	| "noun/classifier"
 	| "noun/proper"
-	| "number"
+	| "noun/proper/brand"
+	| "noun/proper/father"
+	| "noun/proper/first"
+	| "noun/proper/last"
+	| "noun/proper/place"
+	| "noun/proper/street"
 	| "numeral"
+	| "numeral/adverbial"
 	| "numeral/cardinal"
+	| "numeral/collective"
+	| "numeral/fractional"
+	| "numeral/multiplier"
 	| "numeral/ordinal"
-	| "number/cardinal"
-	| "number/ordinal"
-	| "participle"
+	| "numeral/variative"
 	| "particle"
+	| "particle/answer"
+	| "particle/comparative"
+	| "particle/degree"
+	| "particle/focus"
+	| "particle/interjection"
+	| "particle/interjection/onomatopoeia"
+	| "particle/modal"
+	| "particle/negation"
 	| "phrase"
-	| "phrase/prepositional"
+	| "phrase/adpositional"
 	| "pronoun"
-	| "proverb"
+	| "pronoun/demonstrative"
+	| "pronoun/indefinite"
+	| "pronoun/interrogative"
+	| "pronoun/personal"
+	| "pronoun/possessive"
+	| "pronoun/reciprocal"
+	| "pronoun/reflexive"
+	| "pronoun/relative"
+	| "radical"
 	| "romanization"
 	| "root"
 	| "syllable"
 	| "symbol"
-	| "verb";
+	| "symbol/diacritic"
+	| "symbol/numeral"
+	| "symbol/punctuation"
+	| "verb"
+	| "verb/conjugated"
+	| "verb/gerund"
+	| "verb/gerund/declined"
+	| "verb/infinitive"
+	| "verb/infinitive/extended"
+	| "verb/participle"
+	| "verb/phrasal"
+	| "verb/supine"
+	| "unknown";
 
 export type Entry = {
 	lemma: Lemma;
 	partOfSpeech?: PartOfSpeech;
 } & Partial<EntrySections & SharedSections>;
+
+export type EntrySectionSkeleton = {
+	id: string;
+	name: string;
+	sections: EntrySectionSkeleton[];
+};
+
+export type SectionTypeTuple = [sectionType: SectionType, skeleton: EntrySectionSkeleton];
+export type SectionNameTuple = [sectionName: string, skeleton: EntrySectionSkeleton];
+
+export interface QueryResult {
+	entries: Entry[];
+	redirected: boolean;
+}
