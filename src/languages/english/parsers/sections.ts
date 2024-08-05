@@ -237,7 +237,6 @@ function parseEtymology($: cheerio.CheerioAPI, skeleton: EntrySectionSkeleton): 
 	const $row = $root.parent();
 
 	const $elements = $row.nextUntil(constants.selectors.section);
-	console.log($elements.text());
 
 	const $paragraphs = $elements.filter((_, element) => element.name === constants.selectors.etymology.paragraph);
 	const paragraphs = $paragraphs.toArray().map((paragraph) => getCleaned($(paragraph).text()));
