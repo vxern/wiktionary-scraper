@@ -1,7 +1,7 @@
-import * as cheerio from "cheerio";
+import type * as cheerio from "cheerio";
 import constants from "../../../constants/constants.js";
-import { ScraperOptions, defaultScraperOptions } from "../../../options.js";
-import { Entry, EntrySectionSkeleton, Lemma, Sections } from "../../../types.js";
+import { type ScraperOptions, defaultScraperOptions } from "../../../options.js";
+import type { Entry, EntrySectionSkeleton, Lemma, Sections } from "../../../types.js";
 import { getFilled } from "../../../utils.js";
 import { parseSection } from "../../parsers.js";
 import partsOfSpeech from "../parts-of-speech.js";
@@ -98,9 +98,8 @@ function parseMultipleEtymologies(
 		}
 
 		return entries;
-	} else {
-		return entries;
 	}
+	return entries;
 }
 
 function parseSingleEtymology(

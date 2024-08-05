@@ -1,9 +1,9 @@
 import * as cheerio from "cheerio";
 import constants from "./constants/constants.js";
 import { parse } from "./languages/parsers.js";
-import { ScraperOptions, defaultScraperOptions } from "./options.js";
-import { QueryResult } from "./types.js";
 import { resolveSkeletons } from "./languages/resolvers.js";
+import { type ScraperOptions, defaultScraperOptions } from "./options.js";
+import type { QueryResult } from "./types.js";
 
 export async function get(lemma: string, optionsPartial?: Partial<ScraperOptions>): Promise<QueryResult | undefined> {
 	const options: ScraperOptions = { ...defaultScraperOptions, ...optionsPartial };

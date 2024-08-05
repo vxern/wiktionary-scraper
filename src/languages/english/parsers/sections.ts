@@ -1,6 +1,6 @@
-import * as cheerio from "cheerio";
+import type * as cheerio from "cheerio";
 import constants from "../../../constants/constants.js";
-import {
+import type {
 	AlternativeForm,
 	AlternativeReconstruction,
 	Anagram,
@@ -26,7 +26,7 @@ import {
 	UsageNotes,
 } from "../../../types.js";
 import { getCleaned } from "../../../utils.js";
-import { SectionParsers } from "../../parsers.js";
+import type { SectionParsers } from "../../parsers.js";
 
 export default {
 	description: parseDescription,
@@ -237,6 +237,7 @@ function parseEtymology($: cheerio.CheerioAPI, skeleton: EntrySectionSkeleton): 
 	const $row = $root.parent();
 
 	const $elements = $row.nextUntil(constants.selectors.section);
+	console.log($elements.text());
 
 	const $paragraphs = $elements.filter((_, element) => element.name === constants.selectors.etymology.paragraph);
 	const paragraphs = $paragraphs.toArray().map((paragraph) => getCleaned($(paragraph).text()));
@@ -257,11 +258,11 @@ function parseEtymology($: cheerio.CheerioAPI, skeleton: EntrySectionSkeleton): 
 
 	if (paragraphs.length === 0) {
 		return { listEntries };
-	} else if (listEntries.length === 0) {
+	}
+	if (listEntries.length === 0) {
 		return { paragraphs };
-	} else {
-    return { paragraphs, listEntries };
-  }
+	}
+	return { paragraphs, listEntries };
 }
 
 // TODO(vxern): Implement.

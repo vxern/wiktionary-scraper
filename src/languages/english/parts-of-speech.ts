@@ -1,4 +1,4 @@
-import { PartOfSpeech } from "../../types.js";
+import type { PartOfSpeech } from "../../types.js";
 import { getReversed } from "../../utils.js";
 
 /**

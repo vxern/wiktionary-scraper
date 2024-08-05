@@ -1,7 +1,7 @@
-import * as cheerio from "cheerio";
+import type * as cheerio from "cheerio";
 import constants from "../../constants/constants.js";
-import { EntrySectionSkeleton, SectionNameTuple, SectionTypeTuple } from "../../types.js";
-import { Resolvers, SectionsResolved } from "../resolvers.js";
+import type { EntrySectionSkeleton, SectionNameTuple, SectionTypeTuple } from "../../types.js";
+import type { Resolvers, SectionsResolved } from "../resolvers.js";
 import sections from "./sections.js";
 
 const resolvers: Resolvers = { resolveEntrySkeletons, resolveSections };

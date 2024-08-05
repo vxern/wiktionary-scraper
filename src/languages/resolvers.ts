@@ -1,6 +1,6 @@
-import * as cheerio from "cheerio";
-import { ScraperOptions, SiteLanguage, defaultScraperOptions } from "../options.js";
-import { EntrySectionSkeleton, SectionNameTuple, SectionTypeTuple } from "../types.js";
+import type * as cheerio from "cheerio";
+import { type ScraperOptions, type SiteLanguage, defaultScraperOptions } from "../options.js";
+import type { EntrySectionSkeleton, SectionNameTuple, SectionTypeTuple } from "../types.js";
 import english from "./english/resolvers.js";
 
 const resolvers: Record<SiteLanguage, Resolvers> = {

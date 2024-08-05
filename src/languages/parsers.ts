@@ -1,6 +1,6 @@
-import * as cheerio from "cheerio";
-import { ScraperOptions, SiteLanguage } from "../options.js";
-import { Entry, EntrySectionSkeleton, Lemma, SectionType, Sections } from "../types.js";
+import type * as cheerio from "cheerio";
+import type { ScraperOptions, SiteLanguage } from "../options.js";
+import type { Entry, EntrySectionSkeleton, Lemma, SectionType, Sections } from "../types.js";
 import { default as englishSections } from "./english/parsers/sections.js";
 import { default as englishSkeleton } from "./english/parsers/skeleton.js";
 

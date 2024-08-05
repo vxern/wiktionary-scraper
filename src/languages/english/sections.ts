@@ -1,4 +1,4 @@
-import { SectionType } from "../../types.js";
+import type { SectionType } from "../../types.js";
 import { getReversed } from "../../utils.js";
 
 /**

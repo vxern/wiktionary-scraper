@@ -1,4 +1,4 @@
-import { ScraperOptions } from "../../options.js";
+import type { ScraperOptions } from "../../options.js";
 
 export default {
 	definition: (word: string, options: ScraperOptions): string =>
