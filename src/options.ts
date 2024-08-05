@@ -5,7 +5,7 @@ export const defaultScraperOptions: ScraperOptions = {
 	followRedirect: false,
 } as const;
 
-export type SiteLanguage = "de" | "en";
+export type SiteLanguage = "en";
 
 /** Defines the available options for getting a lemma from the dictionary. */
 export interface ScraperOptions {

@@ -3,16 +3,12 @@ import { ScraperOptions, SiteLanguage } from "../options.js";
 import { Entry, EntrySectionSkeleton, Lemma, SectionType, Sections } from "../types.js";
 import { default as englishSections } from "./english/parsers/sections.js";
 import { default as englishSkeleton } from "./english/parsers/skeleton.js";
-import { default as germanSections } from "./german/parsers/sections.js";
-import { default as germanSkeleton } from "./german/parsers/skeleton.js";
 
 const parsers = {
 	skeleton: {
-		de: germanSkeleton,
 		en: englishSkeleton,
 	} satisfies Record<SiteLanguage, Parser>,
 	sections: {
-		de: germanSections,
 		en: englishSections,
 	} satisfies Record<SiteLanguage, SectionParsers>,
 };

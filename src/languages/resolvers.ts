@@ -2,10 +2,8 @@ import * as cheerio from "cheerio";
 import { ScraperOptions, SiteLanguage, defaultScraperOptions } from "../options.js";
 import { EntrySectionSkeleton, SectionNameTuple, SectionTypeTuple } from "../types.js";
 import english from "./english/resolvers.js";
-import german from "./german/resolvers.js";
 
 const resolvers: Record<SiteLanguage, Resolvers> = {
-	de: german,
 	en: english,
 };
 
