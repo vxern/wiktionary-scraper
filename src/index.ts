@@ -10,13 +10,18 @@ const defaultScraperOptions: ScraperOptions = {
 	siteLanguage: "en",
 	userAgent: "wiktionary-scraper (github.com/vxern/wiktionary-scraper)",
 	followRedirect: false,
+	links,
 } as const;
 
 export async function get(
 	lemma: string,
 	options: Partial<ScraperOptions> = defaultScraperOptions,
 ): Promise<Entry[] | undefined> {
-	const optionsFilled: ScraperOptions = { ...defaultScraperOptions, ...options };
+	const optionsFilled: ScraperOptions = {
+		...defaultScraperOptions,
+		...options,
+		links: { ...defaultScraperOptions.links, ...options.links },
+	};
 
 	let response;
 	try {

@@ -22,6 +22,7 @@ describe("The parser", () => {
 	});
 
 	it("returns `undefined` for redirects when following redirects is disabled.", async () => {
+		// This would redirect to "Germany" otherwise.
 		const results = await Wiktionary.get("germany");
 
 		expect(results).to.be.undefined;
