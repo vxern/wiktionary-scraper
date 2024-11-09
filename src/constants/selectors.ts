@@ -10,7 +10,7 @@ export default {
 			},
 		},
 	},
-	section: "h1, h2, h3, h4, h5, h6",
+	section: ".mw-heading, .mw-heading2, .mw-heading3, .mw-heading4, .mw-heading5, .mw-heading6",
 	definitions: {
 		heading: {
 			heading: "p",

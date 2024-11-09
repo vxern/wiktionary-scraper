@@ -1,3 +1,7 @@
+# 0.0.2-patch.1
+
+- Fixed the etymology section being broken after the structure of Wiktionary's HTML changed.
+
 # 0.0.2
 
 - Added option to override the links used by the scraper to allow specifying custom URLs (in case of proxies, etc.).
