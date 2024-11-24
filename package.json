@@ -38,8 +38,7 @@
 	},
 	"scripts": {
 		"build": "tsc",
-		"test": "mocha --no-warnings",
-		"publish": "tsc && npm publish"
+		"test": "mocha --no-warnings"
 	},
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.12"
