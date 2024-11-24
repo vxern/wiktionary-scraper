@@ -1,3 +1,8 @@
+# 0.0.3
+
+- Fixed the etymology section not returning results if the heading had any dots in its number. (e.g. 'Etymology 1.2' instead of 'Etymology 1')
+- Fixed unencoded URIs.
+
 # 0.0.2-patch.1
 
 - Fixed the etymology section being broken after the structure of Wiktionary's HTML changed.
