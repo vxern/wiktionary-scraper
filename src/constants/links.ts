@@ -12,7 +12,9 @@ interface Links {
 
 const links: Links = {
 	definition: (word: string, options: ScraperOptions): string =>
-		`https://${options.siteLanguage}.wiktionary.org/wiki/${word}#${options.lemmaLanguage}`,
+		`https://${options.siteLanguage}.wiktionary.org/wiki/${encodeURIComponent(word)}#${encodeURIComponent(
+			options.lemmaLanguage,
+		)}`,
 };
 
 export type { Links };
