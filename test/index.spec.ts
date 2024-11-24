@@ -54,4 +54,11 @@ describe("The parser", () => {
 		expect(results).to.not.be.undefined;
 		expect(results).to.be.at.of.length.at.least(13);
 	});
+
+	it("returns results for words written in other scripts than Latin.", async () => {
+		const results = await Wiktionary.get("أدرك", { lemmaLanguage: "Arabic" });
+
+		expect(results).to.not.be.undefined;
+		expect(results).to.be.at.of.length.at.least(1);
+	});
 });

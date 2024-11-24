@@ -2,7 +2,7 @@ export default {
 	multipleWhitespace: /\s{2,}/g,
 	// e.g. "Etymology" -> "Etymology", undefined
 	// e.g. "Etymology 1" -> "Etymology", "1"
-	sectionName: /^([a-zA-Z ]+)(?: ([0-9]{1,}))?$/,
+	sectionName: /^([a-zA-Z ]+)(?: ([0-9]{1,}(?:\.[0-9]{1,})*?))?$/,
 	// e.g. "Sample sentence." -> undefined, "Sample sentence."
 	// e.g. "(historical, uncommon, regional) Sample sentence." -> "historical, uncommon, regional", "Sample sentence."
 	withPrefixedLabels: /^(?:\(([^()]+)\) ?)? ?(.+)$/,
