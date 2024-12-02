@@ -1,12 +1,12 @@
 export default {
 	didYouMean: "#did-you-mean > a",
 	tableOfContents: {
-		tableOfContents: "div#toc",
+		tableOfContents: "div#vector-toc",
 		entries: {
-			entries: (depth: number) => `li.toclevel-${depth + 1}`,
+			entries: (depth: number) => `li.vector-toc-level-${depth + 1}`,
 			root: {
 				root: "a",
-				text: ".toctext",
+				text: "span:not([class])",
 			},
 		},
 	},

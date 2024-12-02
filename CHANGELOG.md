@@ -1,3 +1,7 @@
+# 0.0.4
+
+- Fixed the parser being broken after the structure of Wiktionary's layout changed.
+
 # 0.0.3
 
 - Fixed the etymology section not returning results if the heading had any dots in its number. (e.g. 'Etymology 1.2' instead of 'Etymology 1')
